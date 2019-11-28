@@ -1,4 +1,13 @@
 {%extends 'base.html' %}
 {% block content %}
-<h1> Main</h1>
+<div>Map</div>
+
+<div class='container'>
+    {% for post in posts %}
+        {{post.contents}}
+    {% endfor %}
+    <a href = '{%url "name" %}'>파티모집</a>
+
+
+</div>
 {% endblock %}
