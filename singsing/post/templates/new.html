@@ -1,0 +1,19 @@
+{%extends 'base.html' %}
+{% block content %}
+<div>게시글 등록창</div>
+
+<div class='container'>
+    <div class="card">
+        <form action="{%url 'index' %}" method='POST' enctype="multipart/form-data">
+            <input type="hidden" name=csrfmiddlewaretoken value="{{csrf_token}}">
+            <input type="hidden" name="userId" value="{{user}}">
+            <div class="card-body">
+                <textarea class="form-control" rows="5" name='contents' placeholder="내용"></textarea> </div>
+            <div class="card-footer text-right">
+                <input type="submit" class="btn btn-success" value="작성하기">
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
