@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
+from bs4 import BeautifulSoup
+import requests
 from django.http.response import HttpResponse
 from .models import Post, Comment
 import json
+
 # Create your views here.
 def index(request):
     if request.method == 'POST':
@@ -19,6 +22,8 @@ def index(request):
         }
         return render(request, 'index.html', context)
 
+
+
 def new(request):
     user = request.user.id
  
@@ -26,3 +31,4 @@ def new(request):
         'user':user
     }
     return render(request, 'new.html', context)
+
