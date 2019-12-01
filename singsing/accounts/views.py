@@ -19,6 +19,7 @@ def signup(request):
             # print(form)
             #form.save()로 저장 후 user라는 변수에 담기.
             user = form.save()
+            print(request.POST['birthdate'])
             ##로그인도 시켜주자
             auth_login(request, user)
             return redirect('index')
