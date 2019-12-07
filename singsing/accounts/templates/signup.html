@@ -22,9 +22,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function () {
-            $("#datepicker").datepicker({
-                changeMonth: true,
-                changeYear: true
+            $('[type="date"].birthdate').prop('max', function () {
+                return new Date().toJSON().split('T')[0];
             });
         });
     </script>
@@ -56,26 +55,25 @@
         <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
         <label for="userId" class="sr-only">ID</label>
         <input name="username" type="text" id="userId" class="form-control" placeholder="ID" required autofocus>
-        
-        
+
+
         <label for="inputPassword" class="sr-only">Password</label>
         <input name="password1" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <input name="password2" type="password" id="inputPassword1" class="form-control" placeholder="Password Confirmation" required>
+        <input name="password2" type="password" id="inputPassword1" class="form-control"
+            placeholder="Password Confirmation" required>
+        <label for="birthdate">생년월일</label>
+        <input class="birthdate" type="date" placeholder="YYYY-MM-DD" data-date-split-input="true" name="birthdate" /><br>
+        
+         <input type="radio" name="gender" value="male"> Male
+        <input type="radio" name="gender" value="female"> Female
       
-            <span class="float-left">Birth Date: <input type="text" id="datepicker" placeholder="mm/dd/yyyy" name="birthdate"></span>
-            
-            <div class="input-group mt-5">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01" name="image" aria-describedby="inputGroupFileAddon01" multiple>
-                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                </div>
-            </div>
-
-
-            <div class="container mt-5">
+   
+        <div class="container mt-5">
             <button class="btn btn-lg btn-primary btn-block" type="submit">회원 가입</button>
-        <div>  
+            <div>
     </form>
+
+
 
 </body>
 

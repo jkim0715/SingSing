@@ -1,14 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+{%extends 'base.html' %}
+
+{% block content %}
+    <div class = "container">
+        <div class ="row">
+           
+        <img src="" alt="">
+
+        </div>
+        <div class = "row">
+        
+            <span>
+                {{profile.age}}
+            </span>
+        </div>
+        <form action="" method="POST" enctype="multipart/form-data">
+        {% if author_id == user.id %}
+        <div class="input-group mt-3">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile01" name="image"
+                    aria-describedby="inputGroupFileAddon01" multiple>
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
+        </div>
+        <div>
+            <textarea class="form-control" rows="5" name='contents' placeholder="내용"></textarea>
+            
+        </div>
+        {% endif %}
+    </form>
 
     
-</head>
-<body>
-    
-</body>
-</html>
+    </div>
+
+
+{% endblock content %}

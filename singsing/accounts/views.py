@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 
+from post.models import Profile
+from datetime import datetime 
 
 # Create your views here.
 def signup(request):
@@ -15,11 +17,19 @@ def signup(request):
         form = UserCreationForm(request.POST)
         #validation
         # print(form)
+
         if form.is_valid():
             # print(form)
             #form.save()로 저장 후 user라는 변수에 담기.
             user = form.save()
-            print(request.POST['birthdate'])
+            profile = Profile()
+            birthdate =  request.POST['birthdate']
+            profile.user_id = user.id
+            profile.birthdate = birthdate
+            profile.gender = request.POST['gender']
+            age = datetime.now().year-(int)(birthdate.split("-")[0])
+            profile.age = age
+            profile.save()
             ##로그인도 시켜주자
             auth_login(request, user)
             return redirect('index')
@@ -31,6 +41,8 @@ def signup(request):
         else:
         #get방식으로 오면 회원가입 페이지로 랜더링
             return render(request,'signup.html')
+
+
 
 def login(request):
     if request.method=='POST':
@@ -52,5 +64,19 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('index')
+
+
+def profile(request, user_id):
+    # if request.method=='POST':
+    #     profile = Profile()
+    profile = Profile.objects.get(user_id = user_id)
+    author_id = user_id
+    context ={
+        'author_id': author_id,
+        'profile' : profile
+    }
+
+    return render(request, 'profile.html', context )
+
 
 
