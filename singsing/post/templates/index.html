@@ -277,12 +277,12 @@
 
     <div class="container mt-5" style="background-color:darkgreen;">
       <div class="card">
+
         <form action="{%url 'index' %}" method='POST' enctype="multipart/form-data">
             <input type="hidden" name=csrfmiddlewaretoken value="{{csrf_token}}">
             <input type="hidden" name="userId" value="{{user.id}}">
             <div class="card-body">
-                <textarea class="form-control" rows="5" name='contents' placeholder="내용"></textarea> </div>
-                <div class="input-group-prepend">
+                                <div class="input-group-prepend">
                           <span class="input-group-text" id="inputGroupFileAddon01">1분 미리 듣기</span>
                           
                       </div>
@@ -293,18 +293,22 @@
                           <label class="custom-file-label" for="inputGroupFile01">파일 등록</label>
                           
                       </div>
+                <textarea class="form-control" rows="5" name='contents' placeholder="내용"></textarea> </div>
             <div class="card-footer text-right">
                 <input type="submit" class="btn btn-success" value="작성하기">
             </div>
-
         </form>
     </div>
     </div>
 
-      {% for post in posts %}
+
+
+
+     {% for post in posts %}
   <div class="container mt-5" style="background-color: cornsilk;">
             <div class="card mb-3 text-center" >
               <div class="row no-gutters">
+
                 <div class="col-md-4">
                     <img src="" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -316,8 +320,6 @@
                     </div>
 
                 </div>
-
-
 
                 <div class="table col-md-8">
                     <div class="thead">
@@ -353,6 +355,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -360,20 +364,16 @@
     {% endfor %}
 
 
-    <a href='{%url "new" %}'>파티모집</a>
-
-
     <div id="sidebox">
         <button><a class="btn btn-outline-primary" href="#">Login</a></button>
         <button><a class="btn btn-outline-primary" href="#">Login</a></button>
-
     </div>
 
 
     {% endblock %}
 
     {% block script %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e1ff1a6298c053aa2ee7450c7a4dca3d&libraries=services"></script>
     <script>
     
@@ -396,8 +396,6 @@
             alert('GPS를 지원하지 않습니다.')
         }
     } 
-
-
     
     // 마커를 담을 배열입니다
     var markers = [];
@@ -430,7 +428,6 @@
             
             return false;
         }
-
         // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
         ps.keywordSearch(keyword, placesSearchCB, {location: new kakao.maps.LatLng(latitude, longitude)}); 
     }
@@ -468,7 +465,6 @@
         fragment = document.createDocumentFragment(), 
         bounds = new kakao.maps.LatLngBounds(), 
         listStr = '';
-
         console.log(location, bounds)
         
         // 검색 결과 목록에 추가된 항목들을 제거합니다
@@ -483,7 +479,6 @@
             var dy = Math.abs(latitude - place.y)
             newPlaces.push(place)
             
-
         }
         places = [places[0],places[2]]
         places = newPlaces
@@ -603,11 +598,14 @@
     
             if (i===pagination.current) {
                 el.className = 'on';
-
             } else {
-                alert('GPS를 지원하지 않습니다.')
+                el.onclick = (function(i) {
+                    return function() {
+                        pagination.gotoPage(i);
+                    }
+                })(i);
             }
-
+    
             fragment.appendChild(el);
         }
         paginationEl.appendChild(fragment);
@@ -628,14 +626,11 @@
             el.removeChild (el.lastChild);
         }
     }
-
     {% comment %} var audio = document.getElementById("audio_preview");
-
     navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
     navigator.getUserMedia({video: false, audio: true}, function(stream) {
     audio.src = window.URL.createObjectURL(stream);
     }, onRecordFail);
-
     var onRecordFail = function (e) {
     console.log(e);
     } {% endcomment %}
@@ -646,7 +641,6 @@
     $(document).ready(function(){
         getLocation();
     })
-
-
     </script>
     {% endblock %}
+    
