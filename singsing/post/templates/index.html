@@ -121,13 +121,17 @@
                   <input placeholder="Insert HashTag" type="text" class="form-control mt=3" name="hashtag">
                   <div class="input-group mt-3">
                       <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                          <span class="input-group-text" id="inputGroupFileAddon01">1분 미리 듣기</span>
+                          
                       </div>
                       <div class="custom-file">
                           <input multiple name="image" type="file" class="custom-file-input" id="inputGroupFile01"
                               aria-describedby="inputGroupFileAddon01">
-                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                            
+                          <label class="custom-file-label" for="inputGroupFile01">파일 등록</label>
+                          
                       </div>
+                     
                   </div>
               </div>
               <div class="card-footer text-right">
@@ -217,16 +221,20 @@
     {% endblock %}
 
     {% block script %}
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?[카카오 APP key]&libraries=services"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e1ff1a6298c053aa2ee7450c7a4dca3d&libraries=services"></script>
     <script>
+    
+    {% comment %} var coord = [] {% endcomment %}
     var latitude;
     var longitude;
     function getLocation(){
+        alert("go");
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(function(position){
                 latitude= position.coords.latitude
                 longitude =position.coords.longitude
-                //alert(latitude+' '+longitude);
+                alert(latitude+' '+longitude);
                 var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
     
                  // 중심 이동
@@ -270,9 +278,9 @@
             
             return false;
         }
-    
+
         // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-        ps.keywordSearch( keyword, placesSearchCB); 
+        ps.keywordSearch(keyword, placesSearchCB, {location: new kakao.maps.LatLng(latitude, longitude)}); 
     }
     
     // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -302,18 +310,32 @@
     // 검색 결과 목록과 마커를 표출하는 함수입니다
     function displayPlaces(places) {
     
-        var listEl = document.getElementById('placesList'), 
+        var listEl = document.getElementById('placesList'),
+        // location = new kakao.maps.LatLng(37.5429964, 127.0999344),
         menuEl = document.getElementById('menu_wrap'),
         fragment = document.createDocumentFragment(), 
         bounds = new kakao.maps.LatLngBounds(), 
         listStr = '';
+
+        console.log(location, bounds)
         
         // 검색 결과 목록에 추가된 항목들을 제거합니다
         removeAllChildNods(listEl);
     
         // 지도에 표시되고 있는 마커를 제거합니다
         removeMarker();
-        
+        /*
+        var newPlaces = [];
+        for (var place of places) {
+            var dx = Math.abs(longitude - place.x)
+            var dy = Math.abs(latitude - place.y)
+            newPlaces.push(place)
+            
+
+        }
+        places = [places[0],places[2]]
+        places = newPlaces
+        */
         for ( var i=0; i<places.length; i++ ) {
     
             // 마커를 생성하고 지도에 표시합니다
@@ -351,6 +373,7 @@
     
         // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
         listEl.appendChild(fragment);
+        const a = document.createElement('div')
         menuEl.scrollTop = 0;
     
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
@@ -456,13 +479,24 @@
             el.removeChild (el.lastChild);
         }
     }
+
+    {% comment %} var audio = document.getElementById("audio_preview");
+
+    navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia({video: false, audio: true}, function(stream) {
+    audio.src = window.URL.createObjectURL(stream);
+    }, onRecordFail);
+
+    var onRecordFail = function (e) {
+    console.log(e);
+    } {% endcomment %}
     
     
-            var currentPosition = parseInt($("#sidebox").css("top"));
-            $(window).scroll(function() { var position = $(window).scrollTop(); $("#sidebox").stop().animate({"top":position+currentPosition+"px"},1000); });
-            $(document).ready(function(){
-                getLocation();
-            })
+    var currentPosition = parseInt($("#sidebox").css("top"));
+    $(window).scroll(function() { var position = $(window).scrollTop(); $("#sidebox").stop().animate({"top":position+currentPosition+"px"},1000); });
+    $(document).ready(function(){
+        getLocation();
+    })
 
     </script>
     {% endblock %}
