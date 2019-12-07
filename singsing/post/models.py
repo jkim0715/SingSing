@@ -18,6 +18,9 @@ class Post(models.Model):
 
     def comments(self):
         return Comment.objects.filter(post_id=self.id).order_by('created_date')
+
+    def profile(self):
+        return Profile.objects.get(user_id =self.user_id)
       
 
 
@@ -34,10 +37,6 @@ class Profile(models.Model):
     birthdate = models.DateField()
     gender = models.CharField(max_length=16)
     user_likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="profile_likes")
-
-
-class ProfileImage(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     image = models.ImageField(blank=True)
     image_thumbnail = ImageSpecField(
         source='image',
@@ -45,5 +44,7 @@ class ProfileImage(models.Model):
         format='JPEG',
         options={'quality':90}
     )
+
+
 
     
