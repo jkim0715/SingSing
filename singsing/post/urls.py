@@ -12,10 +12,4 @@ urlpatterns = [
     #게시글 작성 (POST)
     path('new/', views.new, name= "new"),
 
-    #게시글 수정
-    #게시글 삭제 
-
-    #댓글 작성
-    #댓글 수정
-    #댓글 삭제 
 ]
