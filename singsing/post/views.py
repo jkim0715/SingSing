@@ -30,6 +30,8 @@ def index(request):
         }
         return render(request, 'index.html', context)
 
+
+
 def delete_post(request):
     if request.method  =='POST':
         id = request.POST['post_id']
@@ -72,3 +74,4 @@ def comment_delete(request):
             return HttpResponse(json.dumps(context), content_type="application/json")
         else:
             return HttpResponse('', status=401)
+
