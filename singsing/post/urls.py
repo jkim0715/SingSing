@@ -9,7 +9,9 @@ urlpatterns = [
     #처음 접속했을 때 메인 페이지 (GET) 
     #게시글 작성 (POST)
     path('', views.index, name = "index"),
+    path('delete/',views.delete_post, name="delete_post"),
     #게시글 작성 (POST)
-    path('new/', views.new, name= "new"),
+    path('comment/', views.comment, name= "comment"),
+    path('comment/delete/', views.comment_delete, name="comment_delete"),
 
 ]

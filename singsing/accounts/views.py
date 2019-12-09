@@ -68,15 +68,20 @@ def logout(request):
 
 def profile(request, user_id):
     # if request.method=='POST':
-    #     profile = Profile()
-    profile = Profile.objects.get(user_id = user_id)
-    author_id = user_id
-    context ={
-        'author_id': author_id,
-        'profile' : profile
-    }
+    if request.method=="POST":
+        profile = Profile.objects.get(user_id = user_id)
+        profile.image= request.FILES['image']
+        profile.save(0)
+        return redirect('index')
+    else:
+        profile = Profile.objects.get(user_id = user_id)
+        author_id = user_id
+        context ={
+            'author_id': author_id,
+            'profile' : profile
+        }
 
-    return render(request, 'profile.html', context )
+        return render(request, 'profile.html', context )
 
 
 
