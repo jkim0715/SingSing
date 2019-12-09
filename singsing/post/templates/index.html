@@ -1,107 +1,30 @@
-    {%extends 'base.html' %}
-    {% load static %}
+{% extends 'base.html' %}
+{% load static %}
 
-    {% block stylesheet %}
-    <style>
-        #sidebox {
-            position: absolute;
-            width: 120px;
-            top: 433px;
-            right: 0px;
-            padding: 3px 10px
-        }
-    </style>
-    {% endblock %}
+{% block stylesheet %}
+
+    <link rel = "stylesheet" href="{% static 'css/map.css'%}">
+     
+{% endblock %}
 
 
 
 
-    {% block content %}
+{% block content %}
+
+
+{% include '_map.html' %}
 
 
 
 
-    <div class="row">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            새 채팅방 만들기
-        </button>
-    </div>
+    
+    
+{% endblock %}
 
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e1ff1a6298c053aa2ee7450c7a4dca3d&libraries=services"></script>
+<script src='{% static "js/map.js" %}'></script>
+{% endblock %}
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">채팅방 만들기</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="create-room-form">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
-                    <div class="modal-body">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon3">채팅방 제목</span>
-                            </div>
-                            <input name="room-title" type="text" class="form-control" id="basic-url"
-                                aria-describedby="basic-addon3">
-                        </div>
-                        <div class="input-group">
-                            <input name="room-max-count" type="number" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                        <button id="create-room" type="button" class="btn btn-primary" data-dismiss="modal">채팅방
-                            생성</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    {% for post in posts %}
-
-
-
-    {{post.contents}}
-
-
-
-    {% endfor %}
-    <a href='{%url "new" %}'>파티모집</a>
-
-
-
-
-    <div id="sidebox">
-        <button><a class="btn btn-outline-primary" href="#">Login</a></button>
-        <button><a class="btn btn-outline-primary" href="#">Login</a></button>
-
-    </div>
-
-
-    {% endblock %}
-
-
-
-
-    {% block script %}
-    <script>
-        var currentPosition = parseInt($("#sidebox").css("top"));
-        $(window).scroll(function () {
-            var position = $(window).scrollTop();
-            $("#sidebox").stop().animate({
-                "top": position + currentPosition + "px"
-            }, 1000);
-        });
-    </script>
-    {% endblock %}
-
-
-
-
-    >>>>>>> ea19e88fa70bd3a5bb988280d6212744edd9441f
