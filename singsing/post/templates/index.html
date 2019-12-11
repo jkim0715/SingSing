@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block stylesheet %}
 
@@ -12,19 +13,139 @@
 
 {% include '_map.html' %}
 {% include '_post.html' %}
-    
+{% comment %}  
     <div id="sidebox">
         <button><a class="btn btn-outline-primary" href="#">Login</a></button>
         <button><a class="btn btn-outline-primary" href="#">Login</a></button>
-    </div>
-    
+    </div> {% endcomment %}
+
+     
+
 {% endblock %}
 
 {% block script %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e1ff1a6298c053aa2ee7450c7a4dca3d&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f53aa3730d09b8b804daa648c5f615c&libraries=services"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+<script>var garaokay = "{% url 'garaokay' %}"; var token = '{{ csrf_token }}' </script>
+
 <script src='{% static "js/map.js" %}'></script>
-<script src="{% static 'js/post.js' %}"></script> 
+
+
+<script>
+
+  
+ $(document).ready(function(){
+    $('input.timepicker').timepicker({
+        timeFormat: 'hh:mm p',
+        interval: 60,
+        minTime: '12:00 am',
+        maxTime: '11:00pm',
+        defaultTime: '11',
+        startTime: '01:00',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+    });
+});
+
+
+$(document).on('click', '#postNew', function () {
+    console.log("여기야여기");
+    print("dd");
+});
+
+
+$(document).on('click', '.deletePost', function () {
+    var post_id = $(this).data('id');
+    $.ajax({
+        url: '{% url "delete_post" %}',
+        method: 'POST',
+        data: {
+            post_id: post_id,
+            csrfmiddlewaretoken: '{{csrf_token}}'
+        },
+        success: function (data) {
+            alert('삭제성공');
+            $('#post-' + data.post_id).remove();
+        },
+        error: function (data) {
+            alert('삭제실패');
+        }
+    })
+})
+
+
+$(document).on('click', '.commentDelete', function () {
+    var comment_id = $(this).data('id');
+    $.ajax({
+        url: "{% url 'comment_delete' %}",
+        method: 'POST',
+        data: {
+            comment_id: comment_id,
+            csrfmiddlewaretoken: '{{csrf_token}}'
+        },
+        success: function (data) {
+            alert('삭제성공');
+            $('#comment-' + data.comment_id).remove();
+        },
+        error: function (data) {
+            alert('삭제실패');
+        }
+    })
+
+})
+
+
+$(document).on('click', '.commentBox', function () {
+    var post_id = $(this).data('value');
+
+    var bool = $("#commentBox-" + post_id).is(":hidden");
+    $("#commentBox-" + post_id).toggleClass('hidden');
+    $("#commentBox-" + post_id).attr('hidden', !bool);
+})
+
+
+$(document).on('submit', ".commentForm", function (e) {
+    event.preventDefault();
+    var post_id = $(this).data('value');
+
+    console.log(post_id);
+    var comment = $('#commentInput-' + post_id).val();
+    $('#commentInput-' + post_id).val(' ');
+    $.ajax({
+        url: '{% url "comment" %}',
+        method: 'POST',
+        data: {
+            comment: comment,
+            post_id: post_id,
+            csrfmiddlewaretoken: '{{csrf_token}}'
+        },
+        success: function (data) {
+            var element =
+            `
+                <li class="list-group-item" id="comment-${data.comment_id}">
+                    <div class="text-right">
+                        ${data.content}
+                    <span><i class="far fa-trash-alt commentDelete" data-id="${data.comment_id}"></i></span>
+                    </div>
+                </li>                                        
+            `
+            $('.comment-' + post_id).prepend(element);
+
+        },
+        error: function (data) {
+            // console.log(data);
+            if (data.status == 401) location.href = "{% url 'accounts:login' %}"
+        }
+    })
+
+
+})
+</script> 
+
+
 {% endblock %}
 
 
