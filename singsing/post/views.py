@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from bs4 import BeautifulSoup
 import requests
 from django.http.response import HttpResponse
-from .models import Post, Comment, Profile
+from .models import Post, Comment, Profile, Place
 from datetime import datetime
 from .forms import MyModelForm
 import json
@@ -67,6 +67,21 @@ def comment(request):
             }
     return HttpResponse(json.dumps(context), content_type="application/json")
 
+def garaokay(request):
+    if request.method=="POST":
+        place, created = Place.objects.get_or_create(
+            place_id= request.POST["place_id"],
+            name= request.POST["place_title"],
+            x= request.POST["place_x"],
+            y= request.POST["place_y"]
+        )
+        if not created:
+         return HttpResponse('저장실패')
+        else:
+         return HttpResponse('저장성공')
+        
+
+    
 
 def comment_delete(request):
     if request.method  =='POST':
