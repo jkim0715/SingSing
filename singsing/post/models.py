@@ -3,6 +3,7 @@ from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill, ResizeToFit, Thumbnail
 from django.conf import settings
 from django.contrib.auth.models import User
+
 # Create your models here.
 
 class Post(models.Model):
@@ -10,7 +11,7 @@ class Post(models.Model):
     longitude = models.FloatField()
     payment = models.CharField(max_length= 16)
     genre = models.TextField()
-    time = models.DateTimeField()
+    time = models.CharField(max_length= 16)
     contents = models.TextField()
     created_date = models.DateTimeField(auto_now_add= True)
     updated_date = models.DateTimeField(auto_now= True)
@@ -38,14 +39,11 @@ class Profile(models.Model):
     birthdate = models.DateField()
     gender = models.CharField(max_length=16)
     user_likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="profile_likes")
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, null=True)
     image_thumbnail = ImageSpecField(
         source='image',
         processors=[ResizeToFit(300,300)],
         format='JPEG',
-        options={'quality':90}
+        options={'quality':90},
     )
 
-
-
-    
