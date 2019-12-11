@@ -1,19 +1,17 @@
 
 var latitude;
 var longitude;
-var url = window.location.host + '/karake/sing/'
+//var url = window.location.host + '/karake/sing/'
 function getLocation(){
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function(position){
             latitude= position.coords.latitude
             longitude =position.coords.longitude
-<<<<<<< HEAD
             $('#postlatitude').val(latitude);
             $('#postlongitude').val(latitude);
-=======
-            
+   
             alert(latitude+' '+longitude);
->>>>>>> 3f5f6eca56d99963e7a3e1a4ca9645000e51493e
+
             var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
             ps.keywordSearch("코인노래방", placesSearchCB, {location: new kakao.maps.LatLng(latitude, longitude)});
                 // 중심 이동
