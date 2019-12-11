@@ -1,19 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div class = "container">
-        <div class ="row">
-           
-        <img src="{% static 'bono.jpg' %}" alt="">
+<div class="container">
+    <div class="row row-cols-3">
+        <div class="col"></div>
+        <div class="col">
+            {% if profile.image_thumbnail %}
+            <img src="{{profile.image_thumbnail.url}}" alt="">
+            {% else %}
 
+            <img src="{% static '/images/bono.jpg' %}" alt="">
+            {% endif %}
+            {% if profile.user_id == user.id %}
+            <i class="far fa-edit"></i>
+            {% else %}
+            {% endif %}
         </div>
-        <div class = "row">
-        
-            <span>
-                {{profile.age}}
-            </span>
-        </div>
-        <form action="{% url 'accounts:profile' user.id %}" method="POST" enctype="multipart/form-data">
+        <div class="col"></div>
+
+    </div>
+    <div class="row">
+        <ul>
+            <li>
+                <div>
+                    {{profile.age}} | {{profile.gender}}
+                </div>
+            </li>
+            <li>
+                <div>
+                    <i class="fas fa-sms"></i>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+
+    <form action="{% url 'accounts:profile' user.id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% if author_id == user.id %}
         <div class="input-group mt-3">
@@ -25,13 +48,12 @@
         </div>
         <div>
             <button type="submit"> 제출</button>
-            
         </div>
         {% endif %}
     </form>
 
-    
-    </div>
+
+</div>
 
 
 {% endblock content %}

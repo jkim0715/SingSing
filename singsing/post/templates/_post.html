@@ -1,144 +1,150 @@
+{% load bootstrap4 %}
 {% comment %} 게시글 작성 {% endcomment %}
-    <div class="container mt-5" style="background-color:darkgreen;">
-        <div class="card">
-            <form  method='POST' enctype="multipart/form-data">
-                <input type="hidden" name=csrfmiddlewaretoken value="{{csrf_token}}">
-                <input type="hidden" name="userId" value="{{user.id}}">
-                <div class="card-body">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon01">1분 미리 듣기</span>
+<div class="container mt-5" style="background-color:darkgreen;">
+    <div class="card">
+        <form method='POST' enctype="multipart/form-data">
+            <input type="hidden" name=csrfmiddlewaretoken value="{{csrf_token}}">
+            <input type="hidden" name="userId" value="{{user.id}}">
+            <div class="card-body">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">1분 미리 듣기</span>
+                </div>
+                <div class="custom-file">
+                    <input multiple name="image" type="file" class="custom-file-input" id="inputGroupFile01"
+                        aria-describedby="inputGroupFileAddon01">
 
-                    </div>
-                    <div class="custom-file">
-                        <input multiple name="image" type="file" class="custom-file-input" id="inputGroupFile01"
-                            aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">파일 등록</label>
 
-                        <label class="custom-file-label" for="inputGroupFile01">파일 등록</label>
+                </div>
 
-                    </div>
-                    <textarea class="form-control" rows="5" name='contents' placeholder="내용"></textarea>
-                        
-                    시간
 
-                  <div class="input-group mb-3">
+                <textarea class="form-control" rows="5" name='contents' placeholder="내용"></textarea>
+
+                {% bootstrap_form form%}
+
+
+                <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">장르</label>
                     </div>
-                    <select class="custom-select"  name = "genre" id="inputGroupSelect01">
+                    <select class="custom-select" name="genre" id="inputGroupSelect01">
                         <option selected>Choose...</option>
                         <option value="balad">발라드</option>
                         <option value="hiphop">힙합</option>
                         <option value="dance">댄스</option>
                     </select>
-                    </div>
-                    
-                
+                </div>
 
-                         
-                  <div class="input-group mb-3">
+
+
+
+                <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">지불방식</label>
                     </div>
-                    <select class="custom-select" name = "payment" id="inputGroupSelect01">
-                        <option  selected>Choose...</option>
+                    <select class="custom-select" name="payment" id="inputGroupSelect01">
+                        <option selected>Choose...</option>
                         <option value="you">니가 100%</option>
                         <option value="me">내가 100%</option>
                         <option value="half">반 반</option>
                     </select>
-                    </div>
-                    
-                    <input type="hidden" id ="postlatitude" name ="latitude" >
-                    <input type="hidden" id ="postlongitude" name = "longitude">
-
-
-
-                </div>
-                <div class="card-footer text-right">
-                    <input type="submit" class="btn btn-success postNew" value="작성하기">
-                </div>
-            </form>
-
-        </div>
-    </div>
-
-
-
-
-    {% for post in posts %}
-    <div class="container mt-5" id="post-{{post.id}}"style="background-color: cornsilk;">
-        <div class="card mb-3 text-center">
-            <div class="row no-gutters">
-
-                <div class="col-md-4">
-                    <span class=>
-                    <img src="{{post.profile.image_thumbnail.url}}" class="card-img-top" alt="..." >
-                    </span>
-                    
-                    <div class="card-body">
-                        <h5 class="card-title">{{post.user.username}}</h5>
-                        <p class="card-text"> {{post.contents}}</p>
-                        <a href="{% url 'accounts:profile' post.user.id %}" class="btn btn-primary">상세보기</a>
-                        ID : {{post.user.id}} <br>
-
-                    </div>
-
                 </div>
 
-                <div class="table col-md-8">
-                    <div class="thead">
-                        <div class="tr">
-                            <div class="th">성별 </div>
-                            <div class="th">나이</div>
-                            <div class="th">위치 </div>
+                <input type="hidden" id="postlatitude" name="latitude">
+                <input type="hidden" id="postlongitude" name="longitude">
 
-                        </div>
-                    </div>
-                    <div class="tbody">
-                        <div class="tr">
-                            <div class="td">{{post.profile.gender}}</div>
-                            <div class="td"> {{post.profile.age}}</div>
-                            <div class="td">{{post.latitude}},{{post.longitude}}</div>
-                        </div>
-                    </div>
-                    <div class="thead">
-                        <div class="tr">
-                            <div class="th">요금</div>
-                            <div class="th">장르</div>
-                            <div class="th">시간</div>
-                        </div>
-                    </div>
-                    <div class="tbody">
-                        <div class="tr">
 
-                            <div class="td">{{post.payment}}</div>
-                            <div class="td">{{post.genre}}</div>
-                            <div class="td">직접입력</div>
 
-                        </div>
-                    </div>
-                </div>
-
-            <i class="fas fa-trash-alt deletePost" data-id="{{post.id}}"></i>
             </div>
+            <div class="card-footer text-right">
+                <input type="submit" class="btn btn-success postNew" value="작성하기">
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% for post in posts %}
+<div class="container mt-5" id="post-{{post.id}}" style="background-color: cornsilk;">
+    <div class="card mb-3 text-center">
+        <div class="row no-gutters">
+
+            <div class="col-md-4">
+                <span class=>
+                    {% if post.profile.image_thumbnail %}
+                    <img src="{{post.profile.image_thumbnail.url}}" class="card-img-top" alt="...">
+                    {% else %}
+                    {% endif %}
+
+
+                </span>
+
+                <div class="card-body">
+                    <h5 class="card-title">{{post.user.username}}</h5>
+                    <p class="card-text"> {{post.contents}}</p>
+                    <a href="{% url 'accounts:profile' post.user.id %}" class="btn btn-primary">상세보기</a>
+                    ID : {{post.user.id}} <br>
+                    <i class="fas fa-trash-alt deletePost" data-id="{{post.id}}"></i>
+
+                </div>
+
+            </div>
+
+            <div class="table col-md-8">
+                <div class="thead">
+                    <div class="tr">
+                        <div class="th">성별 </div>
+                        <div class="th">나이</div>
+                        <div class="th">위치 </div>
+
+                    </div>
+                </div>
+                <div class="tbody">
+                    <div class="tr">
+                        <div class="td">{{post.profile.gender}}</div>
+                        <div class="td"> {{post.profile.age}}</div>
+                        <div class="td">{{post.latitude}},{{post.longitude}}</div>
+                    </div>
+                </div>
+                <div class="thead">
+                    <div class="tr">
+                        <div class="th">요금</div>
+                        <div class="th">장르</div>
+                        <div class="th">시간</div>
+                    </div>
+                </div>
+                <div class="tbody">
+                    <div class="tr">
+
+                        <div class="td">{{post.payment}}</div>
+                        <div class="td">{{post.genre}}</div>
+                        <div class="td">{{post.time}}</div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="row">
-        <small class="commentBox"  data-value="{{post.id}}" >펼처서 댓글보기</small>
-        
-        </div>
-        {% comment %} 댓글 {% endcomment %}
-        <div class ="container mb-5 text-center" id="commentBox-{{post.id}}" hidden>
+            
+        <small class="commentBox text-right" data-value="{{post.id}}">펼처서 댓글보기</small>
+
+            
+    </div>
+    {% comment %} 댓글 {% endcomment %}
+    <div class="container mb-5 text-center" id="commentBox-{{post.id}}" hidden>
         {% comment %} 댓글작성 {% endcomment %}
 
         <ul class="list-group list-group-flush">
             <form class="commentForm" data-value="{{post.id}}">
-            <li class="list-group-item">
-            <div class = "col-12">
-                <input type="textarea" id ="commentInput-{{post.id}}" placeholder="댓글입력" class="form-control" name="contents">
-            </div>
-            <div>
-                <button type="submit"> 댓글작성</button>
-            </div>
-            </li>
+                <li class="list-group-item">
+                    <div class="col-12">
+                        <input type="textarea" id="commentInput-{{post.id}}" placeholder="댓글입력" class="form-control"
+                            name="contents">
+                    </div>
+                    <div>
+                        <button type="submit"> 댓글작성</button>
+                    </div>
+                </li>
             </form>
         </ul>
 
@@ -146,21 +152,20 @@
         {% comment %} 댓글list {% endcomment %}
         <span class="comment-{{post.id}}"></span>
         <ul class="list-group list-group-flush">
-        {% for comment in post.comments %}
+            {% for comment in post.comments %}
             <li class="list-group-item" id="comment-{{comment.id}}">
-            <div class="text-right">
-                {{comment.contents}}
-            <span><i class="far fa-trash-alt commentDelete" data-id="{{comment.id}}"></i></span>
-            </div>
+                <div class="text-right">
+                    {{comment.contents}}
+                    <span><i class="far fa-trash-alt commentDelete" data-id="{{comment.id}}"></i></span>
+                </div>
             </li>
-        
-        {% endfor %}
+
+            {% endfor %}
         </ul>
-        
-        </div>
-        
 
     </div>
 
-    {% endfor %}
 
+</div>
+
+{% endfor %}
