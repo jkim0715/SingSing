@@ -10,9 +10,9 @@ urlpatterns = [
     #게시글 작성 (POST)
     path('', views.index, name = "index"),
     path('delete/',views.delete_post, name="delete_post"),
+    #노래방 등록
+    path('garaokay/',views.garaokay,name="garaokay"),
     #게시글 작성 (POST)
     path('comment/', views.comment, name= "comment"),
     path('comment/delete/', views.comment_delete, name="comment_delete"),
-
-
 ]

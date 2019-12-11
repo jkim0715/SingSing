@@ -22,7 +22,11 @@ class Post(models.Model):
     def profile(self):
         return Profile.objects.get(user_id =self.user_id)
       
-
+class Place(models.Model):
+    place_id = models.CharField(max_length=30, primary_key=True)
+    name = models.CharField(max_length=30)
+    x = models.CharField(max_length=40)
+    y = models.CharField(max_length=40)
 
 class Comment(models.Model):
     contents = models.TextField()
@@ -30,6 +34,7 @@ class Comment(models.Model):
     updated_date = models.DateTimeField(auto_now= True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+   
 
 
 class Profile(models.Model):
@@ -45,6 +50,10 @@ class Profile(models.Model):
         format='JPEG',
         options={'quality':90}
     )
+
+
+
+    
 
 
 
