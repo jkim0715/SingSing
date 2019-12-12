@@ -10,33 +10,53 @@ import json
 # Create your views here.
 def index(request):
     if request.method == 'POST':
+        address = request.POST['address_name']
+        
         post = Post()
         post.contents = request.POST['contents']
         post.user_id= request.POST['userId']
         post.latitude =request.POST['latitude']
         post.longitude =request.POST['longitude']
+        
+        post.address_name = address.split(" ")[1]
         post.genre = request.POST['genre']
         post.payment = request.POST['payment']
         now = datetime.now()
         date = now.strftime("%y-%m-%d")
         time = request.POST['time']
         
+        
+
+        
         post.time = date+' '+time
         
-        #post.save()
+        post.save()
         return redirect('index')
     else:
 
         posts = Post.objects.all().order_by("-created_date")
         form = MyModelForm()
+        
+
         context = {
             'posts':posts,
             'form':form
     
         }
-        return render(request, 'index.html', context)
+    return render(request, 'index.html', context)
 
-
+def check(request):
+    if request.method  =='POST':
+        current_goo = request.POST['current_goo']
+        print(current_goo)
+       
+        
+        posts = Post.objects.all().order_by("-created_date")
+        
+        
+       
+    
+    return render(request, 'index.html')
 
 def delete_post(request):
     if request.method  =='POST':
