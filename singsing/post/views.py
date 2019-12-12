@@ -23,7 +23,7 @@ def index(request):
         
         post.time = date+' '+time
         
-        post.save()
+        #post.save()
         return redirect('index')
     else:
 
