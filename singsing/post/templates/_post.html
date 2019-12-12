@@ -6,7 +6,7 @@
             <input type="hidden" name=csrfmiddlewaretoken value="{{csrf_token}}">
             <input type="hidden" name="userId" value="{{user.id}}">
             <div class="card-body">
-                <div class="input-group-prepend">
+                {% comment %} <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupFileAddon01">1분 미리 듣기</span>
                 </div>
                 <div class="custom-file">
@@ -15,7 +15,7 @@
 
                     <label class="custom-file-label" for="inputGroupFile01">파일 등록</label>
 
-                </div>
+                </div> {% endcomment %}
 
 
                 <textarea class="form-control" rows="5" name='contents' placeholder="내용"></textarea>
