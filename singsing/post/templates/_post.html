@@ -6,7 +6,7 @@
             <input type="hidden" name=csrfmiddlewaretoken value="{{csrf_token}}">
             <input type="hidden" name="userId" value="{{user.id}}">
             <div class="card-body">
-                <div class="input-group-prepend">
+                {% comment %} <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupFileAddon01">1분 미리 듣기</span>
                 </div>
                 <div class="custom-file">
@@ -15,7 +15,7 @@
 
                     <label class="custom-file-label" for="inputGroupFile01">파일 등록</label>
 
-                </div>
+                </div> {% endcomment %}
 
 
                 <textarea class="form-control" rows="5" name='contents' placeholder="내용"></textarea>
@@ -78,8 +78,6 @@
                     <img src="{{post.profile.image_thumbnail.url}}" class="card-img-top" alt="...">
                     {% else %}
                     {% endif %}
-
-
                 </span>
 
                 <div class="card-body">
@@ -88,7 +86,6 @@
                     <a href="{% url 'accounts:profile' post.user.id %}" class="btn btn-primary">상세보기</a>
                     ID : {{post.user.id}} <br>
                     <i class="fas fa-trash-alt deletePost" data-id="{{post.id}}"></i>
-
                 </div>
 
             </div>
@@ -106,7 +103,8 @@
                     <div class="tr">
                         <div class="td">{{post.profile.gender}}</div>
                         <div class="td"> {{post.profile.age}}</div>
-                        <div class="td">{{post.latitude}},{{post.longitude}}</div>
+                        {% comment %} <div class="td">{{post.latitude}},{{post.longitude}}</div> {% endcomment %}
+                        <div class="td">논현동</div>
                     </div>
                 </div>
                 <div class="thead">
@@ -158,7 +156,7 @@
             {% for comment in post.comments %}
             <li class="list-group-item" id="comment-{{comment.id}}">
                 <div class="text-right">
-                    {{comment.contents}}
+                    {{comment.user.username}} : {{comment.contents}}
                     <span><i class="far fa-trash-alt commentDelete" data-id="{{comment.id}}"></i></span>
                 </div>
             </li>

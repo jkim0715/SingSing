@@ -13,8 +13,8 @@ def index(request):
         post = Post()
         post.contents = request.POST['contents']
         post.user_id= request.POST['userId']
-        post.latitude =1.1 #request.POST['latitude']
-        post.longitude =1.1#request.POST['longitude']
+        post.latitude =request.POST['latitude']
+        post.longitude =request.POST['longitude']
         post.genre = request.POST['genre']
         post.payment = request.POST['payment']
         now = datetime.now()
@@ -55,6 +55,7 @@ def comment(request):
         if request.user.is_authenticated:
             contents = request.POST["comment"]
             post_id= request.POST["post_id"]
+            comment_writter = request.user.username
             comment = Comment()
             comment.contents = contents
             comment.post_id= post_id
@@ -63,12 +64,14 @@ def comment(request):
             context = {
                 'content': comment.contents,
                 'id':post_id,
-                'comment_id':comment.id
+                'comment_id':comment.id,
+                'comment_writter' : comment_writter
             }
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 def garaokay(request):
     if request.method=="POST":
+
         place, created = Place.objects.get_or_create(
             place_id= request.POST["place_id"],
             name= request.POST["place_title"],
