@@ -48,6 +48,9 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+.scaleX:hover {
+    transform: scale(1.1, 1.1);
+}
 .table {
     display: table;
     table-layout: fixed;

@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
+    address_name=models.CharField(max_length=30)
     payment = models.CharField(max_length= 16)
     genre = models.TextField()
     time = models.CharField(max_length= 16)
