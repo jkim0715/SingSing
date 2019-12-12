@@ -9,8 +9,26 @@ function getLocation(){
         navigator.geolocation.getCurrentPosition(function(position){
             latitude= position.coords.latitude
             longitude =position.coords.longitude
+<<<<<<< HEAD
            
+=======
+>>>>>>> 8cdeccc2681576094736c96386a46f1ddec61b61
             var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+            var coord = new kakao.maps.LatLng(latitude, longitude);
+            var geocoder = new kakao.maps.services.Geocoder();
+            var callback = function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    $('#postaddress').val(result[0].address.address_name);
+                    
+                }
+                var goo = result[0].address.address_name.split(" ");
+                $('#status_address').val(goo[1]);
+                
+                console.log(goo[1]);
+                
+            };
+            
+            geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
             ps.keywordSearch("코인노래방", placesSearchCB, {location: new kakao.maps.LatLng(latitude, longitude)});
                 // 중심 이동
             map.setCenter(moveLatLon);
@@ -26,8 +44,12 @@ $(document).on('click', '#now_address', function () {
     var callback = function(result, status) {
         if (status === kakao.maps.services.Status.OK) {
             $('#postaddress').val(result[0].address.address_name);
-           
+            
         }
+        var goo = result[0].address.address_name.split(" ");
+        
+        
+        console.log(goo[1]);
         
     };
     
@@ -79,11 +101,11 @@ function searchPlaces() {
 function placesSearchCB(data, status, pagination) {
 
     if (status === kakao.maps.services.Status.OK) {
-
+       
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
         displayPlaces(data);
-        
+        console.log(data)
         // 페이지 번호를 표출합니다
         displayPagination(pagination);
 
@@ -172,7 +194,7 @@ function displayPlaces(places) {
                         },
                         success: function (data) {
                             
-                            alert(data);
+                            //alert(data);
                             
                         },
                         error: function (data) {
