@@ -1,6 +1,9 @@
 {% load bootstrap4 %}
+<div class="container">
+    <small class="postBox text-right" data-value="{{post.id}}">파티모집</small>
+</div>
 {% comment %} 게시글 작성 {% endcomment %}
-<div class="container mt-5" style="">
+<div class="container mt-5" id="postBox" style="" hidden>
     <div class="card border-primary">
         <form method='POST' enctype="multipart/form-data">
             <input type="hidden" name=csrfmiddlewaretoken value="{{csrf_token}}">

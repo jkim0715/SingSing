@@ -107,6 +107,13 @@
                     $("#commentBox-" + post_id).toggleClass('hidden');
                     $("#commentBox-" + post_id).attr('hidden', !bool);
                 })
+                
+                    $(document).on('click', '.postBox', function () {
+                    
+                    var bool = $("#postBox").is(":hidden");
+                    $("#postBox").toggleClass('hidden');
+                    $("#postBox").attr('hidden', !bool);
+                })
 
 
                 $(document).on('submit', ".commentForm", function (e) {

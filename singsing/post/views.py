@@ -22,8 +22,7 @@ def index(request):
         time = request.POST['time']
         
         post.time = date+' '+time
-        
-        #post.save()
+        post.save()
         return redirect('index')
     else:
 
