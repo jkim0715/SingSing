@@ -14,6 +14,7 @@
 {% block content %}
 
 {% include '_map.html' %}
+<input type="hidden" id="status_address" name="goo"> 
 {% include '_post.html' %}
 {% comment %}
 <div id="sidebox">
@@ -44,6 +45,23 @@
 
 <script>
     $(document).ready(function () {
+        var current_goo = $('#status_address').val();
+        console.log(current_goo)
+         $.ajax({
+                    url: '{% url "check" %}',
+                    method: 'POST',
+                    data: {
+                        current_goo: current_goo,
+                        csrfmiddlewaretoken: '{{csrf_token}}'
+                    },
+                    success: function (data) {
+                       alert(data) 
+                        
+                    },
+                    error: function (data) {
+                        alert('실패');
+                    }
+            })
         $('input.timepicker').timepicker({
             timeFormat: 'hh:mm p',
             interval: 60,
@@ -113,7 +131,7 @@
                     event.preventDefault();
                     var post_id = $(this).data('value');
 
-                    console.log(post_id);
+                    //console.log(post_id);
                     var comment = $('#commentInput-' + post_id).val();
                     $('#commentInput-' + post_id).val(' ');
                     $.ajax({

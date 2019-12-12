@@ -23,6 +23,8 @@ class Post(models.Model):
 
     def profile(self):
         return Profile.objects.get(user_id =self.user_id)
+    
+    
       
 class Place(models.Model):
     place_id = models.CharField(max_length=30, primary_key=True)
