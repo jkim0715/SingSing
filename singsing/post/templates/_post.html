@@ -31,10 +31,10 @@
                         <label class="input-group-text" for="inputGroupSelect01">장르</label>
                     </div>
                     <select class="custom-select" name="genre" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="balad">발라드</option>
-                        <option value="hiphop">힙합</option>
-                        <option value="dance">댄스</option>
+                        
+                        <option value="발라드">발라드</option>
+                        <option value="힙합">힙합</option>
+                        <option value="댄스">댄스</option>
                     </select>
                 </div>
 
@@ -46,10 +46,10 @@
                         <label class="input-group-text" for="inputGroupSelect01">지불방식</label>
                     </div>
                     <select class="custom-select" name="payment" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="you">니가 100%</option>
-                        <option value="me">내가 100%</option>
-                        <option value="half">반 반</option>
+                        
+                        <option value="니가 100">니가 100%</option>
+                        <option value="내가 100">내가 100%</option>
+                        <option value="50 50">반 반</option>
                     </select>
                 </div>
                
@@ -87,8 +87,10 @@
                     <h5 class="card-title">{{post.user.username}}</h5>
                     <p class="card-text"> {{post.contents}}</p>
                     <a href="{% url 'accounts:profile' post.user.id %}" class="btn btn-primary">상세보기</a>
-                    ID : {{post.user.id}} <br>
+                    {% if post.user.id == user.id %}
                     <i class="fas fa-trash-alt deletePost" data-id="{{post.id}}"></i>
+                    {% else %}
+                    {% endif %}
                 </div>
 
             </div>

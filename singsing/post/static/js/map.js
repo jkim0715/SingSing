@@ -9,7 +9,7 @@ function getLocation(){
         navigator.geolocation.getCurrentPosition(function(position){
             latitude= position.coords.latitude
             longitude =position.coords.longitude
-            alert(latitude+' '+longitude);
+           
             var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
             ps.keywordSearch("코인노래방", placesSearchCB, {location: new kakao.maps.LatLng(latitude, longitude)});
                 // 중심 이동

@@ -1,0 +1,1 @@
+web: gunicorn singsing.wsgi --log-file -
