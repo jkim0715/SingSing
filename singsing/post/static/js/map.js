@@ -9,10 +9,8 @@ function getLocation(){
         navigator.geolocation.getCurrentPosition(function(position){
             latitude= position.coords.latitude
             longitude =position.coords.longitude
-<<<<<<< HEAD
+            
            
-=======
->>>>>>> 8cdeccc2681576094736c96386a46f1ddec61b61
             var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
             var coord = new kakao.maps.LatLng(latitude, longitude);
             var geocoder = new kakao.maps.services.Geocoder();

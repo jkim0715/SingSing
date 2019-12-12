@@ -5,12 +5,12 @@
 {% comment %} 게시글 작성 {% endcomment %}
 <div class="container mt-5" id="postBox" style="" hidden>
     <div class="card border-primary">
-    
-        <form  method='POST' enctype="multipart/form-data">
-            
+
+        <form method='POST' enctype="multipart/form-data">
+
             <input type="hidden" name=csrfmiddlewaretoken value="{{csrf_token}}">
             <input type="hidden" name="userId" value="{{user.id}}">
-         
+
             <div class="card-body">
                 {% comment %} <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupFileAddon01">1분 미리 듣기</span>
@@ -34,7 +34,7 @@
                         <label class="input-group-text" for="inputGroupSelect01">장르</label>
                     </div>
                     <select class="custom-select" name="genre" id="inputGroupSelect01">
-                        
+
                         <option value="발라드">발라드</option>
                         <option value="힙합">힙합</option>
                         <option value="댄스">댄스</option>
@@ -49,17 +49,17 @@
                         <label class="input-group-text" for="inputGroupSelect01">지불방식</label>
                     </div>
                     <select class="custom-select" name="payment" id="inputGroupSelect01">
-                        
+
                         <option value="니가 100">니가 100%</option>
                         <option value="내가 100">내가 100%</option>
                         <option value="50 50">반 반</option>
                     </select>
                 </div>
-               
+
                 <input type="hidden" id="postlatitude" name="latitude" readonly="readonly">
                 <input type="hidden" id="postlongitude" name="longitude" readonly="readonly">
                 <input type="text" id="postaddress" style="width:300px;" name="address_name" readonly="readonly">
-                
+
                 <button class="btn btn-dark" id="now_address"> 현재 위치 </button>
 
             </div>
@@ -94,112 +94,86 @@
                     {% endif %}
                 </div>
 
+            </div>
 
- 
-    {% for post in posts %}
-        
-         
-        
-                <div class="container mt-5" id="post-{{post.id}}" style="background-color: cornsilk;">
-                    <div class="card mb-3 text-center">
-                        <div class="row no-gutters">
-                        
-                            <div class="col-md-4">
-                                <span class=>
-                                    {% if post.profile.image_thumbnail %}
-                                        <img src="{{post.profile.image_thumbnail.url}}" class="card-img-top" alt="...">
-                                    {% else %}
-                                    {% endif %}
-                                </span>
-
-                                <div class="card-body">
-                                    <h5 class="card-title">{{post.user.username}}</h5>
-                                    <p class="card-text"> {{post.contents}}</p>
-                                    <a href="{% url 'accounts:profile' post.user.id %}" class="btn btn-primary">상세보기</a>
-                                        ID : {{post.user.id}} <br>
-                                    <i class="fas fa-trash-alt deletePost" data-id="{{post.id}}"></i>
-                                </div>
-
-                            </div>
-
-                            <div class="table col-md-8">
-                                <div class="thead">
-                                    <div class="tr">
-                                        <div class="th">성별 </div>
-                                        <div class="th">나이</div>
-                                        <div class="th">위치 </div>
-
-                                    </div>
-                                </div>
-                                <div class="tbody">
-                                    <div class="tr">
-                                        <div class="td">{{post.profile.gender}}</div>
-                                        <div class="td"> {{post.profile.age}}</div>
-                                        {% comment %} <div class="td">{{post.latitude}},{{post.longitude}}</div> {% endcomment %}
-                                        <div class="td">논현동</div>
-                                    </div>
-                                </div>
-                                <div class="thead">
-                                    <div class="tr">
-                                        <div class="th">요금</div>
-                                        <div class="th">장르</div>
-                                        <div class="th">시간</div>
-                                    </div>
-                                </div>
-                                <div class="tbody">
-                                    <div class="tr">
-
-                                        <div class="td">{{post.payment}}</div>
-                                        <div class="td">{{post.genre}}</div>
-                                        <div class="td">{{post.time}}</div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                            
-                        <small class="commentBox text-right" data-value="{{post.id}}">펼처서 댓글보기</small>
-
-                            
-                    </div>
-                    {% comment %} 댓글 {% endcomment %}
-                    <div class="container mb-5 text-center" id="commentBox-{{post.id}}" hidden>
-                        {% comment %} 댓글작성 {% endcomment %}
-
-                        <ul class="list-group list-group-flush">
-                            <form class="commentForm" data-value="{{post.id}}">
-                                <li class="list-group-item">
-                                    <div class="col-12">
-                                        <input type="textarea" id="commentInput-{{post.id}}" placeholder="댓글입력" class="form-control"
-                                            name="contents">
-                                    </div>
-                                    <div>
-                                        <button type="submit"> 댓글작성</button>
-                                    </div>
-                                </li>
-                            </form>
-                        </ul>
-
-
-                        {% comment %} 댓글list {% endcomment %}
-                        <span class="comment-{{post.id}}"></span>
-                        <ul class="list-group list-group-flush">
-                            {% for comment in post.comments %}  
-                            <li class="list-group-item" id="comment-{{comment.id}}">
-                                <div class="text-right">
-                                    {{comment.user.username}} : {{comment.contents}}
-                                    <span><i class="far fa-trash-alt commentDelete" data-id="{{comment.id}}"></i></span>
-                                </div>
-                            </li>
-
-                            {% endfor %}
-                        </ul>
+            <div class="table col-md-8">
+                <div class="thead">
+                    <div class="tr">
+                        <div class="th">성별 </div>
+                        <div class="th">나이</div>
+                        <div class="th">위치 </div>
 
                     </div>
-
-
                 </div>
-        
+                <div class="tbody">
+                    <div class="tr">
+                        <div class="td">{{post.profile.gender}}</div>
+                        <div class="td"> {{post.profile.age}}</div>
+                        {% comment %} <div class="td">{{post.latitude}},{{post.longitude}}</div> {% endcomment %}
+                        <div class="td">논현동</div>
+                    </div>
+                </div>
+                <div class="thead">
+                    <div class="tr">
+                        <div class="th">요금</div>
+                        <div class="th">장르</div>
+                        <div class="th">시간</div>
+                    </div>
+                </div>
+                <div class="tbody">
+                    <div class="tr">
 
-    {% endfor %}
+                        <div class="td">{{post.payment}}</div>
+                        <div class="td">{{post.genre}}</div>
+                        <div class="td">{{post.time}}</div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <small class="commentBox text-right" data-value="{{post.id}}">펼처서 댓글보기</small>
+
+
+    </div>
+    {% comment %} 댓글 {% endcomment %}
+    <div class="container mb-5 text-center" id="commentBox-{{post.id}}" hidden>
+        {% comment %} 댓글작성 {% endcomment %}
+
+        <ul class="list-group list-group-flush">
+            <form class="commentForm" data-value="{{post.id}}">
+                <li class="list-group-item">
+                    <div class="col-12">
+                        <input type="textarea" id="commentInput-{{post.id}}" placeholder="댓글입력" class="form-control"
+                            name="contents">
+                    </div>
+                    <div>
+                        <button type="submit"> 댓글작성</button>
+                    </div>
+                </li>
+            </form>
+        </ul>
+
+
+        {% comment %} 댓글list {% endcomment %}
+        <span class="comment-{{post.id}}"></span>
+        <ul class="list-group list-group-flush">
+            {% for comment in post.comments %}
+            <li class="list-group-item" id="comment-{{comment.id}}">
+                <div class="text-right">
+                    {{comment.user.username}} : {{comment.contents}}
+                    <span><i class="far fa-trash-alt commentDelete" data-id="{{comment.id}}"></i></span>
+                </div>
+            </li>
+
+            {% endfor %}
+        </ul>
+
+    </div>
+
+
+</div>
+
+
+{% endfor %}

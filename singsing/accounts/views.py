@@ -11,10 +11,12 @@ from django.http.response import HttpResponse
 import secrets
 import json
 import pusher
+import os
 
+pusher_key = os.environ.get('pusher_key')
 pusher_client = pusher.Pusher(
   app_id='916208',
-  key='a29dc435598c373f2627',
+  key=pusher_key,
   secret='cff9fea296472be3698a',
   cluster='ap3',
   ssl=True
@@ -119,14 +121,16 @@ def chat(request, guest_id):
     if messages.exists():
         context ={
             'messages': messages,
-            'room' : room
+            'room' : room,
+            'pusher_key':pusher_key
         }
 
         return render(request,'chat.html', context)
     else:
         context2 ={
             'messages': messages,
-            'room' : room
+            'room' : room,
+            'pusher_key':pusher_key
         }
         return render(request,'chat.html', context2)
 

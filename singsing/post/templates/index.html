@@ -27,9 +27,10 @@
 {% endblock %}
 
 {% block script %}
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
 <script type="text/javascript"
-    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f53aa3730d09b8b804daa648c5f615c&libraries=services"></script>
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{kakao_key}}&libraries=services"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 <script>
@@ -45,23 +46,6 @@
 
 <script>
     $(document).ready(function () {
-        var current_goo = $('#status_address').val();
-        console.log(current_goo)
-         $.ajax({
-                    url: '{% url "check" %}',
-                    method: 'POST',
-                    data: {
-                        current_goo: current_goo,
-                        csrfmiddlewaretoken: '{{csrf_token}}'
-                    },
-                    success: function (data) {
-                       alert(data) 
-                        
-                    },
-                    error: function (data) {
-                        alert('실패');
-                    }
-            })
         $('input.timepicker').timepicker({
             timeFormat: 'hh:mm p',
             interval: 60,
@@ -78,7 +62,7 @@
 
 
     $(document).on('click', '.deletePost', function () {
-                var post_id = $(this).data('id');
+
                 $.ajax({
                     url: '{% url "delete_post" %}',
                     method: 'POST',

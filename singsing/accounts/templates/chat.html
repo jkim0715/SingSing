@@ -28,13 +28,15 @@
 
 {% block script %}
 <script>
-    $(function () {
-        Pusher.logToConsole = false;
-        $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
-        var pusher = new Pusher('a29dc435598c373f2627', {
+
+        var pusher = new Pusher('{{pusher_key}}', {
         cluster: 'ap3',
         forceTLS: true
         });
+    $(function () {
+        
+        Pusher.logToConsole = false;
+        $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
 
         var channel = pusher.subscribe('{{room.code}}');
         channel.bind('chat', function(data){
