@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+
+
 {% block content %}
 <div class="container">
     <div class="row row-cols-3">
@@ -28,7 +30,13 @@
             </li>
             <li>
                 <div>
-                    <i class="fas fa-sms"></i>
+                   <form action="{% url 'accounts:chat' profile.user_id %}" metod = "POST">
+                   {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" id="startChat" data-id="{{profile.user_id}}">
+                        DM 보내기
+                    </button>
+                   </form>
+
                 </div>
             </li>
         </ul>
@@ -57,3 +65,30 @@
 
 
 {% endblock content %}
+
+
+
+{% block script %}
+{% comment %} <script>
+    $(document).on('click', '#startChat', function () {
+        guest_id = $(this).data('id');
+        console.log(guest_id)
+        $.ajax({
+            url: '{% url "accounts:chat" %}',
+            method: 'POST',
+            data: {
+                guest_id: guest_id,
+                csrfmiddlewaretoken: '{{csrf_token}}'
+            },
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (data) {
+
+            }
+        })
+
+    })
+</script> {% endcomment %}
+
+{% endblock script %}
