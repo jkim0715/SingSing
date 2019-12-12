@@ -1,6 +1,6 @@
 {% load bootstrap4 %}
 {% comment %} 게시글 작성 {% endcomment %}
-<div class="container mt-5" style="background-color:darkgreen;">
+<div class="container mt-5" style="background-color:darkgreen;" >
     <div class="card">
         <form method='POST' enctype="multipart/form-data">
             <input type="hidden" name=csrfmiddlewaretoken value="{{csrf_token}}">
@@ -75,8 +75,6 @@
                     <img src="{{post.profile.image_thumbnail.url}}" class="card-img-top" alt="...">
                     {% else %}
                     {% endif %}
-
-
                 </span>
 
                 <div class="card-body">
@@ -85,7 +83,6 @@
                     <a href="{% url 'accounts:profile' post.user.id %}" class="btn btn-primary">상세보기</a>
                     ID : {{post.user.id}} <br>
                     <i class="fas fa-trash-alt deletePost" data-id="{{post.id}}"></i>
-
                 </div>
 
             </div>
@@ -103,7 +100,8 @@
                     <div class="tr">
                         <div class="td">{{post.profile.gender}}</div>
                         <div class="td"> {{post.profile.age}}</div>
-                        <div class="td">{{post.latitude}},{{post.longitude}}</div>
+                        {% comment %} <div class="td">{{post.latitude}},{{post.longitude}}</div> {% endcomment %}
+                        <div class="td">논현동</div>
                     </div>
                 </div>
                 <div class="thead">
@@ -155,7 +153,7 @@
             {% for comment in post.comments %}
             <li class="list-group-item" id="comment-{{comment.id}}">
                 <div class="text-right">
-                    {{comment.contents}}
+                    {{comment.user.username}} : {{comment.contents}}
                     <span><i class="far fa-trash-alt commentDelete" data-id="{{comment.id}}"></i></span>
                 </div>
             </li>
