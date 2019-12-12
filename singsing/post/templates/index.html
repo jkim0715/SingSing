@@ -4,7 +4,8 @@
 
 {% block stylesheet %}
 
-    <link rel = "stylesheet" href="{% static 'css/map.css'%}">
+    <link rel = "stylesheet" href="{% static 'css/map.css' %}">
+    <link rel = "stylesheet" href="{% static 'css/post.css' %}">
      
 {% endblock %}
 
@@ -28,12 +29,13 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f53aa3730d09b8b804daa648c5f615c&libraries=services"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
-<script>var garaokay = "{% url 'garaokay' %}"; var token = '{{ csrf_token }}' </script>
+<script>var garaokay = "{% url 'garaokay' %}"; var token = '{{ csrf_token }}'; var coinimg= "{% static "images/c.png" %}" </script>
 
 <script src='{% static "js/map.js" %}'></script>
 
 
 <script>
+
 
   
  $(document).ready(function(){
@@ -51,10 +53,7 @@
 });
 
 
-$(document).on('click', '#postNew', function () {
-    console.log("여기야여기");
-    print("dd");
-});
+
 
 
 $(document).on('click', '.deletePost', function () {

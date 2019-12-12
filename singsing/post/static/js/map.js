@@ -1,4 +1,6 @@
 
+// 주소-좌표 변환 객체를 생성합니다
+
 var latitude;
 var longitude;
 //var url = window.location.host + '/karake/sing/'
@@ -7,9 +9,8 @@ function getLocation(){
         navigator.geolocation.getCurrentPosition(function(position){
             latitude= position.coords.latitude
             longitude =position.coords.longitude
-            $('#postlatitude').val(latitude);
-            $('#postlongitude').val(latitude);
-   
+            
+          
             alert(latitude+' '+longitude);
 
             var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
@@ -22,6 +23,23 @@ function getLocation(){
     }
 } 
 
+$(document).on('click', '#now_address', function () {
+    var coord = new kakao.maps.LatLng(latitude, longitude);
+    var geocoder = new kakao.maps.services.Geocoder();
+    var callback = function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            $('#postaddress').val(result[0].address.address_name);
+           
+        }
+        
+    };
+    
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+    //alert(result);
+    $('#postlatitude').val(latitude);
+    $('#postlongitude').val(longitude);
+    event.preventDefault();
+})
 
 
 // 마커를 담을 배열입니다
@@ -132,10 +150,10 @@ function displayPlaces(places) {
         // 마커와 검색결과 항목에 mouseover 했을때
         // 해당 장소에 인포윈도우에 장소명을 표시합니다
         // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function(marker, title, id,x,y) {
+        (function(marker, title, id,x,y,place_url,phone, address_name) {
                 
                 function handler() {
-                    
+                   
                     var place_position = marker.getPosition()
                     
                     console.log(place_position)
@@ -166,7 +184,7 @@ function displayPlaces(places) {
                     })
                     if (!isAnyOverlay) {//isAnyOverlay: 창이 떠있는지..
                     
-                        overlay = displayInfowindow(marker, title, x, y);
+                        overlay = displayInfowindow(marker, title, x, y, place_url, phone, address_name);
                         
                         var closeBtn = document.querySelector('#closeBtn');
                         isAnyOverlay = true;
@@ -183,7 +201,7 @@ function displayPlaces(places) {
                         overlay.setMap(null);  
                         
                         marker.setClickable(true);
-                        overlay = displayInfowindow(marker, title, x, y);
+                        overlay = displayInfowindow(marker, title, x, y, place_url, phone, address_name);
                         var closeBtn = document.querySelector('#closeBtn');
                         isAnyOverlay = true;
                         closeBtn.addEventListener('click', function () {
@@ -196,7 +214,8 @@ function displayPlaces(places) {
                 };
             kakao.maps.event.addListener(marker, 'click', handler)
             
-        })(marker, places[i].place_name, places[i].id,places[i].x,places[i].y);
+            
+        })(marker, places[i].place_name, places[i].id,places[i].x,places[i].y,places[i].place_url,places[i].phone,places[i].address_name);
         
         fragment.appendChild(itemEl);
     }
@@ -242,7 +261,7 @@ function getListItem(index, places) {
 
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-function addMarker(position, idx, place) {
+function addMarker(position, idx) {
     
     var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
@@ -307,39 +326,45 @@ function displayPagination(pagination) {
 // 인포윈도우에 장소명을 표시합니다
 var isAnyOverlay = false;
 
-function displayInfowindow(marker, title, x, y) {
+function displayInfowindow(marker, title, x, y, place_url, phone, address_name) {
         
         
         
         var content = '<div class="wrap">' + 
         '    <div class="info">' + 
-        '        <div class="title">' + 
+        '        <div class="title" style="background-color:#F5ECCE">' + 
         '           ' + title +
         '            <div class="close" id="closeBtn" title="닫기"></div>' + 
         '        </div>' + 
         '        <div class="body">' + 
         '            <div class="img">' +
-        '                <img src="http://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
+        '                <img src="'+coinimg+'" width="73" height="70">' +
         '           </div>' + 
         '            <div class="desc">' + 
-        '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' + 
-        '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' + 
-        '                <div><a href="http://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' + 
+        '                <div class="ellipsis">'+ address_name + 
+        '                <div class="jibun ellipsis">'+ phone + 
+        '                <div><a href="' + place_url + '" target="_blank" class="link">홈페이지</a>' + 
+        '                <div class="jibun ellipsis float-center mt-1"><button id="wirte_post" type="button" class="btn btn-primary btn-sm" style="color:#ffffff;"> 글쓰러 가기</button>' +
         '            </div>' + 
         '        </div>' + 
         '    </div>' +    
         '</div>';
-        console.log(y, x)
+
+        $(document).on('click', '#wirte_post', function () {
+               
+            $('#postaddress').val(address_name);                 
+            $('#postlatitude').val(y);
+            $('#postlongitude').val(x);
+            console.log(address_name, x, y)
+            // event.preventDefault();
+        })
+        
         var position = new kakao.maps.LatLng(y, x);
         
         var overlay = new kakao.maps.CustomOverlay({
                 content: content,
                 map: map,
-                position: position
-               
-                
-                
-                
+                position: position                
             });
 
         

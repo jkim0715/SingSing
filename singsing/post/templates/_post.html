@@ -1,7 +1,7 @@
 {% load bootstrap4 %}
 {% comment %} 게시글 작성 {% endcomment %}
-<div class="container mt-5" style="background-color:darkgreen;">
-    <div class="card">
+<div class="container mt-5" style="">
+    <div class="card border-primary">
         <form method='POST' enctype="multipart/form-data">
             <input type="hidden" name=csrfmiddlewaretoken value="{{csrf_token}}">
             <input type="hidden" name="userId" value="{{user.id}}">
@@ -49,15 +49,18 @@
                         <option value="half">반 반</option>
                     </select>
                 </div>
-
-                <input type="hidden" id="postlatitude" name="latitude">
-                <input type="hidden" id="postlongitude" name="longitude">
+               
+                <input type="hidden" id="postlatitude" name="latitude" readonly="readonly">
+                <input type="hidden" id="postlongitude" name="longitude" readonly="readonly">
+                <input type="text" id="postaddress" name="postaddress" readonly="readonly">
+                
+                <button class="btn btn-dark" id="now_address"> 현재 위치 </button>
 
 
 
             </div>
             <div class="card-footer text-right">
-                <input type="submit" class="btn btn-success postNew" value="작성하기">
+                <input type="submit" class="btn btn-primary postNew " value="작성하기">
             </div>
         </form>
 

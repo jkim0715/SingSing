@@ -1,0 +1,38 @@
+/* GENERAL input[type=submit] STYLING */
+.cont {
+    padding: 2em;
+}
+input[type=submit],
+input[type=submit]::after {
+  -webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+input[type=submit] {
+  background: none;
+  border: 2px solid #2E9AFE;
+  border-radius: 5px;
+  color: #2E9AFE;
+  display: block;
+  font-size: 0.7em;
+  font-weight: bold;
+  margin: 1em auto;
+  padding: 2em 6em;
+  position: relative;
+  text-transform: uppercase;
+}
+
+input[type=submit]::before,
+input[type=submit]::after {
+  background: #00FFFF;
+  content: '';
+  position: absolute;
+  z-index: -1;
+}
+
+input[type=submit]:hover {
+  color: #fff;
+}
+
