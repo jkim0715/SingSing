@@ -117,6 +117,18 @@
                     $("#postBox").attr('hidden', !bool);
                 })
 
+                    $(document).on('click', '#wirte_post', function () {
+                    var bool = $("#postBox").is(":hidden");
+                    console.log(bool);
+                    if(bool){
+                    $("#postBox").toggleClass('hidden');
+                    $("#postBox").attr('hidden', !bool);
+                    }
+                    
+                  
+
+                })
+
 
                 $(document).on('submit', ".commentForm", function (e) {
                     event.preventDefault();
