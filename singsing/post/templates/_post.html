@@ -75,14 +75,17 @@
         
          
         
-                <div class="container mt-5" id="post-{{post.id}}" style="background-color: cornsilk;">
+                <div class="container mt-5
+                
+                
+                " id="post-{{post.id}}" >
                     <div class="card mb-3 text-center">
                         <div class="row no-gutters">
                         
                             <div class="col-md-4">
                                 <span class=>
                                     {% if post.profile.image_thumbnail %}
-                                        <img src="{{post.profile.image_thumbnail.url}}" class="card-img-top" alt="...">
+                                        <img class="circle" src="{{post.profile.image_thumbnail.url}}" class="card-img-top" alt="...">
                                     {% else %}
                                     {% endif %}
                                 </span>
@@ -150,7 +153,7 @@
                                             name="contents">
                                     </div>
                                     <div>
-                                        <button type="submit"> 댓글작성</button>
+                                        <button class="btn btn-info" type="submit"> 댓글작성</button>
                                     </div>
                                 </li>
                             </form>
