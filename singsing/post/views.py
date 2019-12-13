@@ -6,6 +6,9 @@ from .models import Post, Comment, Profile, Place
 from datetime import datetime
 from .forms import MyModelForm
 import json
+import os
+
+kakao_key = os.environ.get('kakao_key')
 
 # Create your views here.
 def index(request):
@@ -29,7 +32,6 @@ def index(request):
 
         
         post.time = date+' '+time
-        
         post.save()
         return redirect('index')
     else:
@@ -40,23 +42,13 @@ def index(request):
 
         context = {
             'posts':posts,
-            'form':form
+            'form':form,
+            'kakao_key':kakao_key
     
         }
     return render(request, 'index.html', context)
 
-def check(request):
-    if request.method  =='POST':
-        current_goo = request.POST['current_goo']
-        print(current_goo)
-       
-        
-        posts = Post.objects.all().order_by("-created_date")
-        
-        
-       
-    
-    return render(request, 'index.html')
+
 
 def delete_post(request):
     if request.method  =='POST':

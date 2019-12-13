@@ -9,6 +9,8 @@ function getLocation(){
         navigator.geolocation.getCurrentPosition(function(position){
             latitude= position.coords.latitude
             longitude =position.coords.longitude
+            
+           
             var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
             var coord = new kakao.maps.LatLng(latitude, longitude);
             var geocoder = new kakao.maps.services.Geocoder();
@@ -370,9 +372,10 @@ function displayInfowindow(marker, title, x, y, place_url, phone, address_name) 
             $('#postaddress').val(address_name);                 
             $('#postlatitude').val(y);
             $('#postlongitude').val(x);
-            console.log(address_name, x, y)
             // event.preventDefault();
+
         })
+
         
         var position = new kakao.maps.LatLng(y, x);
         
