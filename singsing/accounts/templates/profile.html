@@ -1,38 +1,54 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    
+    
+{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row row-cols-3">
         <div class="col"></div>
-        <div class="col">
+        <div class="col" style="text-align:center;">
             {% if profile.image_thumbnail %}
-            <img src="{{profile.image_thumbnail.url}}" alt="">
+            <svg height="100" width="100">
+                <circle class="img-circular" cx="50" cy="50" r="40" stroke="#428bca" stroke-width="6" fill="#ffffff">
+                    <img class="circle" src="{{profile.image_thumbnail.url}}" alt="">
+                </circle>
+            </svg> 
+            
             {% else %}
-
-            <img src="{% static '/images/bono.jpg' %}" alt="">
+            
+            <img class="circle" src="{% static '/images/bono.jpg' %}" alt="">
             {% endif %}
-            {% if profile.user_id == user.id %}
-            <i class="far fa-edit"></i>
-            {% else %}
-            {% endif %}
+            <div class="row" >
+                {% if profile.user_id == user.id %}
+                <i class="far fa-edit"></i>
+                {% else %}
+                {% endif %}
+            </div>
+            
         </div>
-        <div class="col"></div>
+        <div class="col">
+            
+        </div>
 
     </div>
-    <div class="row">
+    <div style="text-align:center;">
         <ul>
-            <li>
+            
+            <li style="list-style:none;">
                 <div>
-                    {{profile.age}} | {{profile.gender}}
+                    <i class="fas fa-baby"></i>{{profile.age}} | <i class="fas fa-male"></i> {{profile.gender}}
                 </div>
             </li>
-            <li>
+            <li style="list-style:none;">
                 <div>
                    <form action="{% url 'accounts:chat' profile.user_id %}" metod = "POST">
                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary" id="startChat" data-id="{{profile.user_id}}">
+                    <button type="submit" class="btn btn-outline-primary" id="startChat" data-id="{{profile.user_id}}">
                         DM 보내기
                     </button>
                    </form>
@@ -55,7 +71,7 @@
             </div>
         </div>
         <div>
-            <button type="submit"> 제출</button>
+            <button class="btn btn-success" type="submit"> 변경완료</button>
         </div>
         {% endif %}
     </form>
@@ -69,6 +85,9 @@
 
 
 {% block script %}
+<script>
+
+</script
 {% comment %} <script>
     $(document).on('click', '#startChat', function () {
         guest_id = $(this).data('id');

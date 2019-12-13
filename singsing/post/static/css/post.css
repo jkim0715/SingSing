@@ -1,3 +1,10 @@
+.circle{
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: #cdfa04;
+  background:center 100% no-repeat;
+}
 /* GENERAL input[type=submit] STYLING */
 .cont {
     padding: 2em;
