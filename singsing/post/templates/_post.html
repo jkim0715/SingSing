@@ -1,6 +1,6 @@
 {% load bootstrap4 %}
 <div class="container">
-    <small class="postBox text-right" data-value="{{post.id}}">파티모집</small>
+    <small class="postBox float-right btn btn-outline-info" data-value="{{post.id}}">파티모집</small>
 </div>
 {% comment %} 게시글 작성 {% endcomment %}
 <div class="container mt-5" id="postBox" style="" hidden>
@@ -72,7 +72,7 @@
 </div>
 
 {% for post in posts %}
-<div class="container mt-5" id="post-{{post.id}}" style="background-color: cornsilk;">
+<div class="container mt-5" id="post-{{post.id}}" >
     <div class="card mb-3 text-center">
         <div class="row no-gutters">
 
@@ -133,7 +133,7 @@
 
         </div>
 
-        <small class="commentBox text-right" data-value="{{post.id}}">펼처서 댓글보기</small>
+        <small class="commentBox text-center btn btn-outline-dark" data-value="{{post.id}}">펼처서 댓글보기</small>
 
 
     </div>
@@ -149,7 +149,7 @@
                             name="contents">
                     </div>
                     <div>
-                        <button class="btn btn-info" type="submit"> 댓글작성</button>
+                        <button class="btn btn-info float-right mt-1" type="submit"> 댓글작성</button>
                     </div>
                 </li>
             </form>
